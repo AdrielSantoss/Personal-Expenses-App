@@ -53,16 +53,36 @@ class MyHome extends StatelessWidget {
                       ), 
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          color: Colors.purple,
                           width: 2,
                         ),
                       ),
                       padding: const EdgeInsets.all(10),
-                      child: Text(tran.value.toString())),
+                      child: Text(
+                        tran.value.toString(), 
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.purple
+                        ),
+                        )
+                      ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(tran.title),
-                        Text(tran.date.toString())
+                        Text(
+                          tran.title,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        Text(
+                          tran.date.toString(),
+                          style: TextStyle(
+                            color: Colors.grey.shade600
+                          ),
+                        )
                       ],
                     )
                   ],
