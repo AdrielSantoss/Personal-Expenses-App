@@ -10,10 +10,9 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
-      child: SingleChildScrollView(
-        child: Column(
-          children: transactions.map((tran){
+        height: 300,
+        child: ListView.builder(itemBuilder: (ctx, index) {
+          final tran = transactions[index];
             return Card(
               child: Row(
                 children: [
@@ -59,9 +58,9 @@ class TransactionList extends StatelessWidget {
                 ],
               ),
             );
-          }).toList(),
-        ),
-      ),
+        }, 
+        itemCount: transactions.length,
+      )
     );
   }
 }
