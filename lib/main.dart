@@ -1,6 +1,7 @@
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 main() => runApp(const ExtensesApp());
 
@@ -21,6 +22,9 @@ class MyHome extends StatelessWidget {
     Transaction(id: 't2', title: 'Conta de luz', value: 210.76, date: DateTime.now()),
   ];
 
+  final titleController = TextEditingController();
+  final valueController = TextEditingController();
+
   MyHome({ Key? key }) : super(key: key);
 
   @override
@@ -30,7 +34,6 @@ class MyHome extends StatelessWidget {
         title: const Text('Despesas pessoais'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
            const SizedBox(
@@ -59,7 +62,7 @@ class MyHome extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.all(10),
                       child: Text(
-                        tran.value.toString(), 
+                        'R\$ ${tran.value.toStringAsFixed(2)}', 
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -78,7 +81,7 @@ class MyHome extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          tran.date.toString(),
+                          DateFormat('d/MMM/y').format(tran.date),
                           style: TextStyle(
                             color: Colors.grey.shade600
                           ),
@@ -89,6 +92,32 @@ class MyHome extends StatelessWidget {
                 ),
               );
             }).toList(),
+          ),
+          Card(
+            elevation: 5,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Titulo',
+                    ),
+                  ),
+                  TextField(
+                    controller: valueController, //formControlName
+                    decoration: const InputDecoration(
+                      labelText: 'Valor (R\$)',
+                    ),
+                  ),
+                  TextButton(child: const Text('Nova transacao'), onPressed: () {
+                    print(titleController.text);
+                    print(valueController.text);
+                  })
+                ],
+              ),
+            ),
           )
         ],
       )
