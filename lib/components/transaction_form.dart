@@ -1,12 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
+class TransactionForm extends StatefulWidget {
   final void Function(String, double) adicionarTransacion;
 
-  TransactionForm({Key? key, required this.adicionarTransacion}) : super(key: key);
+  const TransactionForm({Key? key, required this.adicionarTransacion}) : super(key: key);
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final titleController = TextEditingController();
+
+  final valueController = TextEditingController();
 
   _submitForm(){
     var title = titleController.text;
@@ -15,7 +22,7 @@ class TransactionForm extends StatelessWidget {
     if(title.isEmpty || value <= 0){
         return;
     }
-    adicionarTransacion(title, value);
+    widget.adicionarTransacion(title, value); //WIDGET
   }
 
   @override
