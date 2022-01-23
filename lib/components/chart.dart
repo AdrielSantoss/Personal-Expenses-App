@@ -1,3 +1,4 @@
+import 'package:expenses/components/chart_bar.dart';
 import 'package:expenses/models/transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,15 +34,25 @@ class Chart extends StatelessWidget {
       });
   }
 
+  double get _weekTotalValue{
+    return groupedTransactions.fold(0.0, (sum, item) {
+      return sum + double.parse(item['value'].toString()); 
+    }); // reduce
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
         elevation: 6,
         margin: const EdgeInsets.all(20),
         child: Row(
-          children: [
-
-          ]
+          children: groupedTransactions.map((tr) {
+            return ChartBar(
+              label: tr['day'].toString(),
+              value: double.parse(tr['value'].toString()),
+              percentage: ((tr['value'] as double) / _weekTotalValue).isNaN ? 0.0 : (tr['value'] as double) / _weekTotalValue
+            );
+          }).toList()
         ),
     );
   }
