@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double) adicionarTransacion;
@@ -12,8 +13,8 @@ class TransactionForm extends StatefulWidget {
 
 class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
-
   final valueController = TextEditingController();
+  late DateTime _selectedDate;
 
   _submitForm(){
     var title = titleController.text;
@@ -23,6 +24,22 @@ class _TransactionFormState extends State<TransactionForm> {
         return;
     }
     widget.adicionarTransacion(title, value); //WIDGET
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context, 
+      initialDate: DateTime.now(), 
+      firstDate: DateTime.now().subtract(const Duration(days: 360)), 
+      lastDate: DateTime.now()
+    ).then((pickedDate) {
+      if(pickedDate == null) {
+        return;
+      }
+      setState(() {
+        _selectedDate = _selectedDate;
+      });
+    }); // PROMISE! (future)
   }
 
   @override
@@ -48,7 +65,25 @@ class _TransactionFormState extends State<TransactionForm> {
                 labelText: 'Valor (R\$)',
               ),
             ),
-            TextButton(child: const Text('Nova transacao'), onPressed: () => _submitForm())
+            SizedBox(
+              height: 70,
+              child: Row(
+                children: [
+                  // _selectedDate ? // ajustar outra hora
+                  // const Text('Nenhuma data selecionada!') :
+                  // Text(DateFormat('dd/MM/y').format(_selectedDate)),
+                  TextButton(
+                    child: const Text(
+                      'Selecionar data',
+                       style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    )),
+                    onPressed: _showDatePicker,
+                  )
+                ], 
+              ),
+            ),
+            ElevatedButton(child: const Text('Adicionar'), onPressed: () => _submitForm())
           ],
         ),
       ),
