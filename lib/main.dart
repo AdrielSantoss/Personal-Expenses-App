@@ -19,6 +19,7 @@ class ExtensesApp extends StatelessWidget {
         home: const MyHome(),
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple),
+          primaryColor: Colors.purple,
           fontFamily: 'Quicksand',
           textTheme: ThemeData.light().textTheme.copyWith(
             headline6: const TextStyle(
