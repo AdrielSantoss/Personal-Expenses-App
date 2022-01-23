@@ -34,7 +34,8 @@ class _MyHomeState extends State<MyHome> {
     Transaction(id: 't2', title: 'Conta de luz', value: 210.76, date: DateTime.now()),
   ];
 
-  _adicionarTransacion(String title, double value) => setState(() {
+  _adicionarTransacion(String title, double value) { 
+    setState(() {
       _transactions.add(
         Transaction(
           id: Random().nextDouble().toString(), 
@@ -43,6 +44,9 @@ class _MyHomeState extends State<MyHome> {
         )
       );
     });  
+
+    Navigator.of(context).pop(); //close modal
+  }
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
