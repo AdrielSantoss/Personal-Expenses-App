@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:expenses/components/chart.dart';
 import 'package:expenses/components/transaction_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +43,14 @@ class _MyHomeState extends State<MyHome> {
 
   final List<Transaction> _transactions = [];
 
+  List<Transaction> get _recentTransactions {
+    return _transactions.where((tr) { // filter
+      return tr.date.isAfter(DateTime.now().subtract(
+        const Duration(days: 7)
+      ));
+    }).toList(); 
+  }
+
   _adicionarTransacion(String title, double value) { 
     setState(() {
       _transactions.add(
@@ -80,14 +89,7 @@ class _MyHomeState extends State<MyHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-              const SizedBox(
-                width: double.infinity,
-                child: Card(
-                color: Colors.blue,
-                child: Text('Gráfico'),
-                elevation: 5,
-              ),
-            ),
+            Chart(recentTransaction: _recentTransactions),
             TransactionList(transactions: _transactions)
           ],
         ),
