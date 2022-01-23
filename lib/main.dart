@@ -19,6 +19,13 @@ class ExtensesApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple),
           fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+            headline6: const TextStyle(
+              fontFamily: 'OpenSans',
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+            )
+          )
         ),
     );
   }
@@ -33,10 +40,7 @@ class MyHome extends StatefulWidget {
 
 class _MyHomeState extends State<MyHome> {
 
-  final _transactions = [
-    Transaction(id: 't1', title: 'Novo tenis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.76, date: DateTime.now()),
-  ];
+  final List<Transaction> _transactions = [];
 
   _adicionarTransacion(String title, double value) { 
     setState(() {
