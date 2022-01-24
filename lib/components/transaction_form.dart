@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) adicionarTransacion;
+  final void Function(String, double, DateTime) adicionarTransacion;
 
   const TransactionForm({Key? key, required this.adicionarTransacion}) : super(key: key);
 
@@ -14,7 +14,7 @@ class TransactionForm extends StatefulWidget {
 class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
   final valueController = TextEditingController();
-  late DateTime _selectedDate;
+  DateTime _selectedDate = DateTime.now();
 
   _submitForm(){
     var title = titleController.text;
@@ -23,7 +23,7 @@ class _TransactionFormState extends State<TransactionForm> {
     if(title.isEmpty || value <= 0){
         return;
     }
-    widget.adicionarTransacion(title, value); //WIDGET
+    widget.adicionarTransacion(title, value, _selectedDate); //WIDGET
   }
 
   _showDatePicker() {
@@ -37,7 +37,7 @@ class _TransactionFormState extends State<TransactionForm> {
         return;
       }
       setState(() {
-        _selectedDate = _selectedDate;
+        _selectedDate = pickedDate;
       });
     }); // PROMISE! (future)
   }
@@ -67,11 +67,10 @@ class _TransactionFormState extends State<TransactionForm> {
             ),
             SizedBox(
               height: 70,
-              child: Row(
+              child: Row( 
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // _selectedDate ? // ajustar outra hora
-                  // const Text('Nenhuma data selecionada!') :
-                  // Text(DateFormat('dd/MM/y').format(_selectedDate)),
+                  Text(DateFormat('dd/MM/y').format(_selectedDate)),
                   TextButton(
                     child: const Text(
                       'Selecionar data',

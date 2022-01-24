@@ -52,13 +52,14 @@ class _MyHomeState extends State<MyHome> {
     }).toList(); 
   }
 
-  _adicionarTransacion(String title, double value) { 
+  _adicionarTransacion(String title, double value, DateTime date) { 
     setState(() {
       _transactions.add(
         Transaction(
           id: Random().nextDouble().toString(), 
-          title: title, value: value,
-          date: DateTime.now()
+          title: title,
+          value: value,
+          date: date
         )
       );
     });  
